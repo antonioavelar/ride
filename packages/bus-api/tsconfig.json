@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "declaration": true,
+    "outDir": "./dist",
+    "module": "commonjs",
+    "allowJs": true,
+    "noEmit": false,
+    "composite": true,
+    "baseUrl": "./src/",
+    "resolveJsonModule":true,
+  },
+  "include": [
+    "./src/**/*",
+    "./config/**/*.json"
+  ],
+}
