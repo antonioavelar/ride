@@ -1,5 +1,5 @@
 import Coordinates from 'ts/interfaces/Coordinates';
-import PlacesModel from '../models/Place';
+import LocationsModel from '../locations/locations.model';
 
 import * as turf from '@turf/turf';
 import Place from 'ts/interfaces/Place';
@@ -8,7 +8,7 @@ import Place from 'ts/interfaces/Place';
 export async function getAvailableLocations(location: Coordinates) {
   const GeoJSON = turf.point([location.long, location.lat]);
 
-  const places = await PlacesModel.find({
+  const places = await LocationsModel.find({
     location: {
       $near: {
         $geometry: GeoJSON.geometry,
@@ -26,7 +26,7 @@ export async function getAvailableLocations(location: Coordinates) {
 export async function createLocation(location: Coordinates): Promise<Place> {
   const placeGeoJson = turf.point([location.long, location.lat]);
 
-  const newPlace = await PlacesModel.create({ location: placeGeoJson.geometry });
+  const newPlace = await LocationsModel.create({ location: placeGeoJson.geometry });
 
   return newPlace;
 }

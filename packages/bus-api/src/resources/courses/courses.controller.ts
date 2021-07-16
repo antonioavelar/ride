@@ -1,7 +1,6 @@
-import * as CoursesService from '../services/coursesService';
+import * as CoursesService from './courses.service';
 import { Request, Response } from 'express';
 import * as yup from 'yup';
-import Course from 'ts/interfaces/Course';
 
 
 export async function createCourse(req: Request, res: Response, next: Function) {

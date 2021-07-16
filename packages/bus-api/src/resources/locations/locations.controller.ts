@@ -1,4 +1,4 @@
-import * as CoursesService from '../services/locationsService';
+import * as CoursesService from './locations.service';
 import { Request, Response } from 'express';
 import * as yup from 'yup';
 import Place from 'ts/interfaces/Place';
@@ -8,7 +8,7 @@ export async function getAvailableLocations(req: Request, res: Response) {
   try {
     const schema = yup.object({
       lat: yup.number().max(90).min(-90).required(),
-      long: yup.number().max(90).min(-90).required(),
+      long: yup.number().max(180).min(-180).required(),
     }).required();
 
     const location = await schema.validate(req.query);

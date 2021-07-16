@@ -18,6 +18,7 @@
   },
   "dependencies": {
     "@googlemaps/google-maps-services-js": "^3.1.16",
+    "@mapbox/mapbox-sdk": "^0.13.0",
     "@turf/turf": "^6.4.0",
     "@types/nconf": "^0.10.0",
     "express": "^4.17.1",
