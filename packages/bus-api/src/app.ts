@@ -1,6 +1,7 @@
 const nconf = require('./helpers/config');
-import * as express from 'express';
+import express = require('express');
 import * as mongoose from 'mongoose';
+import sessionMiddleware from './middlewares/session';
 import { CoursesRouter } from './resources/courses';
 import { LocationsRouter } from './resources/locations';
 
@@ -9,9 +10,7 @@ mongoose.connect(nconf.get('MONGO_DB'), { useNewUrlParser: true })
   .catch((e) => {
     console.log(e)
   });
-
-
-export class App {
+export default class App {
   public server;
 
   constructor() {
@@ -25,7 +24,7 @@ export class App {
   }
 
   private routes() {
-    this.server.use(CoursesRouter);
+    this.server.use(sessionMiddleware, CoursesRouter);
     this.server.use(LocationsRouter);
   }
 

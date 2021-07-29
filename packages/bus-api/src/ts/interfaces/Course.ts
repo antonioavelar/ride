@@ -1,13 +1,15 @@
-import { LineString } from '@turf/turf';
+import { LineString, Geometry, Properties } from '@turf/turf';
+import Coordinates from './Coordinates';
 
 export default interface Course {
-    geometry?: LineString,
-    start: {
-        placeId: string
-        departureTime: Date
-    },
-    stop: {
-        placeId: string
-        arrivalTime: Date
-    }
+  geometry?: LineString,
+  start: {
+    geometry: Geometry,
+    properties: Properties,
+  },
+  stop: {
+    geometry: Geometry,
+    properties: Properties,
+  }
 }
+

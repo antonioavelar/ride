@@ -1,6 +1,13 @@
 {
-    "watch": ["src"],
-    "ext": "ts,json",
-    "ignore": ["src/**/*.spec.ts"],
-    "exec": "ts-node ./src/app.ts"  
+  "watch": [
+    "src",
+    "config"
+  ],
+  "ext": "ts,json",
+  "ignore": [
+    "src/**/*.spec.ts"
+  ],
+  "execMap": {
+    "ts": "node --require ts-node/register"
   }
+}

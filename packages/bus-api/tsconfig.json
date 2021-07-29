@@ -7,7 +7,9 @@
     "noEmit": false,
     "composite": true,
     "baseUrl": "./src/",
-    "resolveJsonModule":true,
+    "resolveJsonModule": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
   },
   "include": [
     "./src/**/*",

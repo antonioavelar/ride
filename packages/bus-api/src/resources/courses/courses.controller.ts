@@ -1,23 +1,31 @@
-import * as CoursesService from './courses.service';
+import CoursesService from './courses.service';
 import { Request, Response } from 'express';
 import * as yup from 'yup';
+import { CreateCourseDto } from './courses.dto';
 
 
-export async function createCourse(req: Request, res: Response, next: Function) {
+export async function createCourse(req, res: Response, next: Function) {
   try {
     const schema = yup.object({
       start: yup.object({
-        placeId: yup.string().length(24).required(),
-        departureTime: yup.date().required(),
-      }).required(),
+        coordinates: yup.object({
+          lat: yup.number().max(90).min(-90).defined(),
+          long: yup.number().max(180).min(-180).defined(),
+        }),
+        departureTime: yup.date().defined(),
+      }).defined(),
       stop: yup.object({
-        placeId: yup.string().length(24).required(),
-        arrivalTime: yup.date().required(),
-      }).required(),
-    }).required();
+        coordinates: yup.object({
+          lat: yup.number().max(90).min(-90).defined(),
+          long: yup.number().max(180).min(-180).defined(),
+        }),
+        arrivalTime: yup.date().defined(),
+      }).defined(),
+    }).defined();
 
-    const location = await schema.validate(req.body);
-    const course = await CoursesService.createCourse(location);
+    const location: CreateCourseDto = await schema.validate(req.body);
+
+    const course = await CoursesService.createCourse(location, req.user);
 
     res.json({
       course,
@@ -26,3 +34,32 @@ export async function createCourse(req: Request, res: Response, next: Function) 
     next(error)
   }
 }
+
+
+export async function getCourses(req: Request, res: Response, next: Function) {
+  try {
+    const schema = yup.object({
+      stop: yup.object({
+        lat: yup.number().max(90).min(-90).defined(),
+        long: yup.number().max(180).min(-180).defined(),
+      }),
+      start: yup.object({
+        lat: yup.number().max(90).min(-90).defined(),
+        long: yup.number().max(180).min(-180).defined(),
+      }),
+      kilometers: yup.number().integer().max(10).min(1).default(1),
+    }).defined();
+
+    const data = await schema.validate(req.query);
+
+    const courses = await CoursesService.getCourses(data);
+
+    res.json({
+      courses,
+    })
+
+  } catch (error) {
+    next(error)
+  }
+}
+
