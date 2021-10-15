@@ -4,9 +4,25 @@ dsn: memory
 
 serve:
   public:
-    base_url: http://127.0.0.1:4433/
+    base_url: http://127.0.0.1:4455/.ory/kratos/public/
     cors:
+      allowed_origins:
+        - http://127.0.0.1:4455
+      allowed_methods:
+        - POST
+        - GET
+        - PUT
+        - PATCH
+        - DELETE
+      allowed_headers:
+        - Content-Type
+        - Cookie
+      exposed_headers:
+        - Content-Type
+        - Set-Cookie
       enabled: true
+      debug: true
+
   admin:
     base_url: http://kratos:4434/
 
@@ -39,10 +55,10 @@ selfservice:
 
     logout:
       after:
-        default_browser_return_url: http://127.0.0.1:4455/auth/login
+        default_browser_return_url: http://127.0.0.1:4455/logout
 
     login:
-      ui_url: http://127.0.0.1:4455/auth/login
+      ui_url: http://127.0.0.1:4455/login
       lifespan: 10m
 
     registration:
@@ -51,8 +67,7 @@ selfservice:
       after:
         password:
           hooks:
-            -
-              hook: session
+            - hook: session
 
 log:
   level: debug

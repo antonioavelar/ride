@@ -1,0 +1,25 @@
+version: "3.7"
+
+services:
+  web:
+    image: "node:lts-alpine"
+    user: "node:node"
+    working_dir: "/srv"
+    command: ["yarn", "start"]
+    stdin_open: true
+    ports:
+      - "4435:4435"
+    networks:
+      - intranet
+    restart: on-failure
+    environment:
+      - PATH=/srv/node_modules/.bin:$PATH
+      - PORT=4435
+      - REACT_APP_KRATOS_PUBLIC=http://127.0.0.1:4455/.ory/kratos/public
+      - JWKS_URL=http://localhost:4456/.well-known/jwks.json
+      - SECURITY_MODE=jwks
+    volumes:
+      - "./:/srv:delegated"
+
+networks:
+  intranet:

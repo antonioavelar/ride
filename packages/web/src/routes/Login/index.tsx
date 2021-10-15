@@ -11,9 +11,53 @@ import {
   Heading,
   Text,
   useColorModeValue,
-} from "@chakra-ui/react"
+} from "@chakra-ui/react";
+import {
+  Configuration,
+  V0alpha1Api,
+  SubmitSelfServiceLoginFlowWithPasswordMethodBodyMethodEnum as MethodsEnum,
+} from "@ory/kratos-client";
+import { useEffect, useState } from "react";
 
-export default function Login() {
+// Uses the ORY Kratos NodeJS SDK:
+const kratos = new V0alpha1Api(
+  new Configuration({ basePath: process.env.REACT_APP_KRATOS_PUBLIC }),
+);
+
+export default function Login(props: any) {
+  const [values, setValues] = useState({
+    password_identifier: "",
+    password: "",
+  });
+  const [form, setForm] = useState({} as any);
+
+  const login = async () => {
+    await kratos.submitSelfServiceLoginFlow(
+      form.id,
+      {
+        ...values,
+        csrf_token: form.ui.nodes[0].attributes.value,
+        method: MethodsEnum.Password,
+      },
+      { withCredentials: true },
+    );
+
+    // redirect to user home page
+    props.history.replace("/");
+  };
+
+  useEffect(() => {
+    console.log("MOUNTED!");
+    (async () => {
+      await kratos
+        .initializeSelfServiceLoginFlowForBrowsers(false)
+        .then((res) => {
+          setForm(res.data);
+        })
+        .catch((err) => {});
+    })();
+  }, []);
+
   return (
     <Flex
       minH={"100vh"}
@@ -28,20 +72,23 @@ export default function Login() {
             to enjoy all of our cool <Link color={"blue.400"}>features</Link> ✌️
           </Text>
         </Stack>
-        <Box
-          rounded={"lg"}
-          bg={useColorModeValue("white", "gray.700")}
-          boxShadow={"lg"}
-          p={8}
-        >
+        <Box rounded={"lg"} bg={useColorModeValue("white", "gray.700")} boxShadow={"lg"} p={8}>
           <Stack spacing={4}>
             <FormControl id="email">
               <FormLabel>Email address</FormLabel>
-              <Input type="email" />
+              <Input
+                value={values.password_identifier}
+                onChange={(e) => setValues({ ...values, password_identifier: e.target.value })}
+                type="email"
+              />
             </FormControl>
             <FormControl id="password">
               <FormLabel>Password</FormLabel>
-              <Input type="password" />
+              <Input
+                value={values.password}
+                onChange={(e) => setValues({ ...values, password: e.target.value })}
+                type="password"
+              />
             </FormControl>
             <Stack spacing={10}>
               <Stack
@@ -58,6 +105,7 @@ export default function Login() {
                 _hover={{
                   bg: "blue.500",
                 }}
+                onClick={login}
               >
                 Sign in
               </Button>
@@ -66,5 +114,5 @@ export default function Login() {
         </Box>
       </Stack>
     </Flex>
-  )
+  );
 }

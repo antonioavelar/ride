@@ -1,6 +1,9 @@
 {
   "name": "root",
   "private": true,
+  "scripts": {
+    "dev": "docker-compose -f ./docker-compose.yml up"
+  },
   "devDependencies": {
     "lerna": "^4.0.0"
   }

@@ -1,11 +1,13 @@
 import { Router } from 'express';
 import * as LocationsController from '../locations/locations.controller';
+import sessionMiddleware from '../../middlewares/session';
 
 const router = Router();
 
 
 router
-  .get('/locations', LocationsController.getAvailableLocations)
-  .post('/locations', LocationsController.createNewLocations)
+  .use('/locations', sessionMiddleware)
+  .get('/', LocationsController.getAvailableLocations)
+  .post('/', LocationsController.createNewLocations)
 
 export default router;

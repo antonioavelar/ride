@@ -1,0 +1,17 @@
+version: "3.7"
+
+services:
+  bus-api:
+    image: "node:lts-alpine"
+    user: "node:node"
+    working_dir: "/bus-api"
+    command: ["yarn", "dev"]
+    stdin_open: true
+    networks:
+      - intranet
+    restart: on-failure
+    volumes:
+      - "./packages/bus-api:/bus-api:cached"
+
+networks:
+  intranet:
