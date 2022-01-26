@@ -7,7 +7,7 @@ const router = Router();
 
 router
   .use('/locations', sessionMiddleware)
-  .get('/', LocationsController.getAvailableLocations)
+  .get('/locations', LocationsController.getAvailableLocations)
   .post('/', LocationsController.createNewLocations)
 
 export default router;

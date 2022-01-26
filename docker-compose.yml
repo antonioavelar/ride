@@ -12,6 +12,7 @@ services:
     restart: on-failure
     depends_on: 
       - web
+      - bus-api
       - kratos
     networks:
       - intranet
@@ -22,6 +23,11 @@ services:
     extends:
       file: ./packages/kratos/docker-compose.yml
       service: kratos
+
+  bus-api:
+    extends:
+      file: ./packages/bus-api/docker-compose.yml
+      service: bus-api
 
   web:
     extends:

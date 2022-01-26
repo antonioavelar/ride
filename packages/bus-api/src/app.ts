@@ -1,5 +1,6 @@
 const nconf = require('./helpers/config');
 import express = require('express');
+import * as morgan from 'morgan';
 import * as mongoose from 'mongoose';
 import { CoursesRouter } from './resources/courses';
 import { LocationsRouter } from './resources/locations';
@@ -14,13 +15,16 @@ export default class App {
   public server;
 
   constructor() {
-    this.server = express()
-    this.middleware()
-    this.routes()
+    this.server = express();
+    this.middleware();
+    this.routes();
   }
 
   private middleware() {
-    this.server.use(express.json())
+    this.server.use(express.json());
+    if (nconf.get('NODE_ENV') !== 'production') {
+      this.server.use(morgan());
+    }
   }
 
   private routes() {

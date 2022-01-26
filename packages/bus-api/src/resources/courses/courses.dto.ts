@@ -16,8 +16,8 @@ export interface CreateCourseDto {
 }
 
 export interface GetCoursesDto {
-  start: Coordinates,
-  stop: Coordinates,
+  start?: Coordinates,
+  stop?: Coordinates,
   kilometers: number
 }
 

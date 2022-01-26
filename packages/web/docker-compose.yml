@@ -15,6 +15,7 @@ services:
     environment:
       - PATH=/srv/node_modules/.bin:$PATH
       - PORT=4435
+      - REACT_APP_BACKEND=http://127.0.0.1:4455/api
       - REACT_APP_KRATOS_PUBLIC=http://127.0.0.1:4455/.ory/kratos/public
       - JWKS_URL=http://localhost:4456/.well-known/jwks.json
       - SECURITY_MODE=jwks

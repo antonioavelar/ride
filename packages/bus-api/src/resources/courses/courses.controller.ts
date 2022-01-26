@@ -38,17 +38,17 @@ export async function createCourse(req, res: Response, next: Function) {
 
 export async function getCourses(req: Request, res: Response, next: Function) {
   try {
-    const schema = yup.object({
+    const schema = yup.object().shape({
       stop: yup.object({
-        lat: yup.number().max(90).min(-90).defined(),
-        long: yup.number().max(180).min(-180).defined(),
-      }),
+        lat: yup.number().max(90).min(-90),
+        long: yup.number().max(180).min(-180)
+      }).defined(),
       start: yup.object({
-        lat: yup.number().max(90).min(-90).defined(),
-        long: yup.number().max(180).min(-180).defined(),
-      }),
+        lat: yup.number().max(90).min(-90),
+        long: yup.number().max(180).min(-180),
+      }).defined(),
       kilometers: yup.number().integer().max(10).min(1).default(1),
-    }).defined();
+    }).required();
 
     const data = await schema.validate(req.query);
 

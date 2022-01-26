@@ -1,6 +1,6 @@
 {
   "PORT": 3000,
   "MONGO_DB": "mongodb://127.0.0.1:27017/ride",
-  "KRATOS_PUBLIC_URL": "http://127.0.0.1:4433",
+  "KRATOS_PUBLIC_URL": "http://kratos:4433",
   "MAPBOX_API_KEY": "pk.eyJ1IjoiYW50b25pb2F2ZWxhciIsImEiOiJja3FyNTZ3ZnkyYWNlMm9tdjByNndheWVhIn0.8GtDPcQMXiTeTev2dE4PMg"
 }

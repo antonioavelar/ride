@@ -108,7 +108,6 @@ interface SidebarProps extends BoxProps {
 }
 
 const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
-  console.log(rest);
   return (
     <Box
       transition="3s ease"

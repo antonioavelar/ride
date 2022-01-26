@@ -7,11 +7,15 @@ services:
     working_dir: "/bus-api"
     command: ["yarn", "dev"]
     stdin_open: true
+    environment:
+      - MONGO_DB=mongodb://host.docker.internal:27017/ride
     networks:
       - intranet
     restart: on-failure
     volumes:
-      - "./packages/bus-api:/bus-api:cached"
+      - "./:/bus-api:cached"
+    ports:
+      - "3000:3000"
 
 networks:
   intranet:
